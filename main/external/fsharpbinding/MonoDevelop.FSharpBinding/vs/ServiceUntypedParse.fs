@@ -92,18 +92,18 @@ type FSharpParseFileResults(errors : FSharpErrorInfo[], input : Ast.ParsedInput 
         | Some(input) -> FSharpNoteworthyParamInfoLocations.Find(pos,input)
         | _ -> None
     
-    /// Get declared items and the selected item at the specified location
-    member private scope.GetNavigationItemsImpl() =
-       ErrorScope.Protect Range.range0 
-            (fun () -> 
-                match input with
-                | Some(ParsedInput.ImplFile(ParsedImplFileInput(_modname,_isScript,_qualName,_pragmas,_hashDirectives,modules,_isLastCompiland))) ->
-                    NavigationImpl.getNavigationFromImplFile modules 
-                | Some(ParsedInput.SigFile(ParsedSigFileInput(_modname,_qualName,_pragmas,_hashDirectives,_modules))) ->
-                    NavigationImpl.empty
-                | _ -> 
-                    NavigationImpl.empty )
-            (fun _ -> NavigationImpl.empty)   
+    ///// Get declared items and the selected item at the specified location
+    //member private scope.GetNavigationItemsImpl() =
+    //   ErrorScope.Protect Range.range0 
+    //        (fun () -> 
+    //            match input with
+    //            | Some(ParsedInput.ImplFile(ParsedImplFileInput(_modname,_isScript,_qualName,_pragmas,_hashDirectives,modules,_isLastCompiland))) ->
+    //                NavigationImpl.getNavigationFromImplFile modules 
+    //            | Some(ParsedInput.SigFile(ParsedSigFileInput(_modname,_qualName,_pragmas,_hashDirectives,_modules))) ->
+    //                NavigationImpl.empty
+    //            | _ -> 
+    //                NavigationImpl.empty )
+    //        (fun _ -> NavigationImpl.empty)   
             
     member private scope.ValidateBreakpointLocationImpl(pos) =
         let isMatchRange m = rangeContainsPos m pos || m.StartLine = pos.Line
@@ -367,10 +367,10 @@ type FSharpParseFileResults(errors : FSharpErrorInfo[], input : Ast.ParsedInput 
       | Some(ParsedInput.SigFile(ParsedSigFileInput(modname, _, _, _, _))) -> modname
       | _ -> ""
     
-    // Get items for the navigation drop down bar       
-    member scope.GetNavigationItems() =
-        // This does not need to be run on the background thread
-        scope.GetNavigationItemsImpl()
+    //// Get items for the navigation drop down bar       
+    //member scope.GetNavigationItems() =
+    //    // This does not need to be run on the background thread
+    //    scope.GetNavigationItemsImpl()
 
     member scope.ValidateBreakpointLocation(pos) =
         // This does not need to be run on the background thread
@@ -639,7 +639,7 @@ module UntypedParseImpl =
             | SynExpr.Sequential(_, _, e1, e2, _) -> Some [e1; e2]
             | _ -> None
 
-        let inline orElse x = Microsoft.FSharp.Core.Option.orElse x
+        let inline orElse x = Misc.orElse x
 
         let inline isPosInRange range = Range.rangeContainsPos range pos
 
@@ -1172,19 +1172,19 @@ module UntypedParseImpl =
                         | _ -> None 
                         
                     member this.VisitBinding(defaultTraverse, synBinding) = defaultTraverse synBinding 
-                    
-                    member this.VisitHashDirective(range) = 
-                        if rangeContainsPos range pos then Some CompletionContext.Invalid 
+                    }
+                    //member this.VisitHashDirective(range) = 
+                    //    if rangeContainsPos range pos then Some CompletionContext.Invalid 
                         
-                        else None 
+                    //    else None 
                         
-                    member this.VisitModuleOrNamespace(SynModuleOrNamespace(longId = idents)) =
-                        match List.tryLast idents with
-                        | Some lastIdent when pos.Line = lastIdent.idRange.EndLine ->
-                            let stringBetweenModuleNameAndPos = lineStr.[lastIdent.idRange.EndColumn..pos.Column - 1]
-                            if stringBetweenModuleNameAndPos |> Seq.forall (fun x -> x = ' ' || x = '.') then
-                                Some CompletionContext.Invalid
-                            else None
-                        | _ -> None }
+                    //member this.VisitModuleOrNamespace(SynModuleOrNamespace(longId = idents)) =
+                    //    match List.tryLast idents with
+                    //    | Some lastIdent when pos.Line = lastIdent.idRange.EndLine ->
+                    //        let stringBetweenModuleNameAndPos = lineStr.[lastIdent.idRange.EndColumn..pos.Column - 1]
+                    //        if stringBetweenModuleNameAndPos |> Seq.forall (fun x -> x = ' ' || x = '.') then
+                    //            Some CompletionContext.Invalid
+                    //        else None
+                    //    | _ -> None }
 
         AstTraversal.Traverse(pos, pt, walker)

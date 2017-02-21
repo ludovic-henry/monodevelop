@@ -273,7 +273,8 @@ module TooltipFormatting =
     match el with
     | FSharpToolTipElement.None -> ()
     | FSharpToolTipElement.Single(it, comment) ->
-        signatureB.Append(GLib.Markup.EscapeText (it)) |> ignore
+        let x = GLib.Markup.EscapeText (it)
+        signatureB.Append x |> ignore
         let html = buildFormatComment comment
         if not (String.IsNullOrWhiteSpace html) then
             commentB.Append(html) |> ignore

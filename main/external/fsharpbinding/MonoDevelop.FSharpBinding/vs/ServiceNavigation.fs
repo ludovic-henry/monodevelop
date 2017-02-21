@@ -10,7 +10,7 @@ namespace Microsoft.FSharp.Compiler.SourceCodeServices
 open Microsoft.FSharp.Compiler 
 open Microsoft.FSharp.Compiler.Range
 open Microsoft.FSharp.Compiler.Ast
-open Microsoft.FSharp.Compiler.SourceCodeServices.ItemDescriptionIcons 
+//open Microsoft.FSharp.Compiler.SourceCodeServices.ItemDescriptionIcons 
 
 /// Represents the differnt kinds of items that can appear in the navigation bar
 type FSharpNavigationDeclarationItemKind =

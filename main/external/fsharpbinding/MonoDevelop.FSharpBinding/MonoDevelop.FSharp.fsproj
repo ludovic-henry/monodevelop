@@ -219,12 +219,13 @@
     <Compile Include="Properties\AddinInfo.fs" />
     <Compile Include="HighlightUnusedCode.fs" />
     <Compile Include="ScriptDebugging.fs" />
+    <Compile Include="vs\CommonRoslynHelpers.fs" />
     <Compile Include="vs\IncrementalBuild.fs" />
-    <Compile Include="vs\ServiceNavigation.fs" />
-    <Compile Include="vs\ServiceUntypedParse.fsi" />
     <Compile Include="vs\ServiceUntypedParse.fs" />
     <Compile Include="vs\ServiceAssemblyContent.fs" />
     <Compile Include="CodeFix\AddOpenCodeFixProvider.fs" />
+    <None Include="vs\ServiceNavigation.fs" />
+    <None Include="vs\ServiceUntypedParse.fsi" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
