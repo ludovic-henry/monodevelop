@@ -16,8 +16,8 @@ script_name=./`basename $0`
 DEP[0]=md-addins
 DEP_NAME[0]=MDADDINS
 DEP_PATH[0]=${top_srcdir}/../md-addins
-DEP_MODULE[0]=git@github.com:xamarin/md-addins.git
-DEP_NEEDED_VERSION[0]=32771632eb3cf7f64c1acf4812423dc7253d3d46
+DEP_MODULE[0]=git@github.com:luhenry/md-addins.git
+DEP_NEEDED_VERSION[0]=183c0f61d167eee36c6aeef33ab540cf26ecfb5d
 DEP_BRANCH_AND_REMOTE[0]="d15-4 origin/d15-4"
 
 # heap-shot
